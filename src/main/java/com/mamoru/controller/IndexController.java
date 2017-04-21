@@ -22,23 +22,25 @@ import java.util.Set;
 @Controller
 public class IndexController {
 
-    final NoteRepository noteRepository;
+    private final NoteRepository noteRepository;
 
     @Autowired
     public IndexController(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
 
-    @RequestMapping("/index")
-    public List<Note> index(@RequestParam(value = "page", required = false, defaultValue = "0") int page, @RequestParam(value = "size",required = false, defaultValue = "10") int size, Model model) {
-        Page<Note> all = noteRepository.findAll(new PageRequest(page, size));
+    @RequestMapping("/notes")
+    public String index(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                        @RequestParam(value = "size",required = false, defaultValue = "10") int size, Model model) {
+
+        List<Note> all = noteRepository.findAll();
 //        List<Note> content = all.getContent();
 //        model.ad
-        model.addAllAttributes(all.getContent());
-        model.addAttribute("page",page);
-        model.addAttribute("countPages",all.getTotalPages());
-        model.addAttribute("countElems",all.getNumberOfElements());
-        return all.getContent();
+        model.addAttribute("notes",all);
+//        model.addAttribute("page",page);
+//        model.addAttribute("countPages",all.getTotalPages());
+//        model.addAttribute("countElems",all.getNumberOfElements());
+        return "notes";
     }
 
 }

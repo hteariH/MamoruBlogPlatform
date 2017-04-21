@@ -32,12 +32,12 @@ public class MvcappApplication{
 			Tag tag3 = new Tag("books");
 
 			noteRepository1.save(new ArrayList<Note>(){{
-				add(new Note("text1",new HashSet<Tag>(){{
+				add(new Note("title1","","text1",new HashSet<Tag>(){{
 					add(tag1);
 					add(tag2);
 				}}));
 
-				add(new Note("text2", new HashSet<Tag>(){{
+				add(new Note("title1", "","text2", new HashSet<Tag>(){{
 					add(tag1);
 					add(tag3);
 				}}));

@@ -2,6 +2,7 @@ package com.mamoru.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -18,18 +19,36 @@ public class Note {
     private String title;
 
     @Lob
+    private String shortText;
+
+    @Lob
     private String text;
+
+    private String img = null;
+
+    private Date date;
 
     private Set<Tag> tags;
 
     public Note() {
     }
 
-    public Note(String text,  Set<Tag> tags) {
+    public Note(String title, String img, String text, Set<Tag> tags) {
+        this.title = title;
+        this.img = img;
+        this.shortText=text.substring(0,text.indexOf('\n'));
         this.text = text;
         this.tags = tags;
+        date = new Date(System.currentTimeMillis());
     }
 
+    public Note(String title, String shortText, String img, String text, Set<Tag> tags) {
+        this.title = title;
+        this.shortText = shortText;
+        this.text = text;
+        this.tags = tags;
+        date = new Date(System.currentTimeMillis());
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,6 +84,30 @@ public class Note {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public String getShortText() {
+        return shortText;
+    }
+
+    public void setShortText(String shortText) {
+        this.shortText = shortText;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override
